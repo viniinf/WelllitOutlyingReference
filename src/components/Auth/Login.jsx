@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { auth } from '../../services/firebase';
-import SignUp from './SignUp'; // Importe o componente SignUp
+import SignUp from './SignUp';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showSignUp, setShowSignUp] = useState(false); // Adicione o estado para mostrar ou ocultar o formulário de cadastro
+  const [showSignUp, setShowSignUp] = useState(false); // estado para mostrar ou ocultar o formulário de cadastro
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

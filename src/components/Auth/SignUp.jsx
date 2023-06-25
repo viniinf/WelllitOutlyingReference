@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth, firestore } from '../../services/firebase'; // Importe o serviço Firebase
+import { auth, firestore } from '../../services/firebase';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -22,10 +22,10 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      // Use a função createUserWithEmailAndPassword para criar uma nova conta
+      // função createUserWithEmailAndPassword para criar uma nova conta
       const { user } = await auth.createUserWithEmailAndPassword(email, password);
 
-      // Armazene a informação do papel do usuário no banco de dados
+      // Armazena a informação do papel do usuário no banco de dados
       await firestore.collection('users').doc(user.uid).set({
         role: role
       });
