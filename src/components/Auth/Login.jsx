@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth, firestore } from '../../services/firebase';
 import SignUp from './SignUp';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getFirestore, collection, doc, getDoc } from 'firebase/firestore';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showSignUp, setShowSignUp] = useState(false); // estado para mostrar ou ocultar o formulário de cadastro
+  const [showSignUp, setShowSignUp] = useState(false);
+
+  const auth = getAuth();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -19,21 +25,20 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      await auth.signInWithEmailAndPassword(email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       console.log('Login bem-sucedido!');
 
-      // Obter dados do usuário logado
       const user = auth.currentUser;
       if (user) {
-        const userSnapshot = await firestore.collection('users').doc(user.uid).get();
+        const firestore = getFirestore();
+        const userSnapshot = await getDoc(doc(firestore, 'users', user.uid));
         const userData = userSnapshot.data();
         const role = userData.role;
 
         console.log('Role do usuário:', role);
 
-        // Redirecionar com base na role do usuário
         if (role === 'gerente') {
-          // Redirecionar para a página de cotações
+          navigate('/cotacoes');
         } else if (role === 'administrador') {
           // Redirecionar para a página de administração
         } else {
@@ -47,6 +52,19 @@ const Login = () => {
 
   const handleToggleSignUp = () => {
     setShowSignUp(!showSignUp);
+  };
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log('Usuário cadastrado com sucesso:', userCredential.user);
+
+      // Redirecionar ou executar outras ações após o cadastro bem-sucedido
+    } catch (error) {
+      console.log('Erro ao cadastrar:', error.message);
+    }
   };
 
   return (

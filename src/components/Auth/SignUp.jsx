@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { auth, firestore } from '../../services/firebase';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { collection, doc, setDoc } from 'firebase/firestore';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -22,16 +24,16 @@ const SignUp = () => {
     e.preventDefault();
 
     try {
-      // função createUserWithEmailAndPassword para criar uma nova conta
-      const { user } = await auth.createUserWithEmailAndPassword(email, password);
+      // Criação do usuário com email e senha
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-      // Armazena a informação do papel do usuário no banco de dados
-      await firestore.collection('users').doc(user.uid).set({
-        role: role
-      });
+      // Armazenar a informação do papel do usuário no banco de dados
+      const userRef = doc(firestore, 'users', user.uid);
+      await setDoc(userRef, { role });
 
       console.log('Cadastro realizado com sucesso!');
-      // Redirecione para a página desejada após o cadastro
+      // Redirecionar para a página desejada após o cadastro
     } catch (error) {
       console.log('Erro ao cadastrar:', error.message);
     }

@@ -1,6 +1,10 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
+
+
+
+
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -13,12 +17,26 @@ const firebaseConfig = {
 };
 
 // Inicializar o Firebase
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 // Referência para o serviço de autenticação do Firebase
-export const auth = firebase.auth();
+export const auth = getAuth(app);
 
 // Referência para o serviço Firestore do Firebase
-export const firestore = firebase.firestore();
+export const firestore = getFirestore(app);
 
-export default firebase;
+// Função para obter as cotações
+export const getQuotes = async () => {
+  try {
+    const quotesCollectionRef = collection(firestore, 'quotes');
+    const quotesSnapshot = await getDocs(quotesCollectionRef);
+    const quotes = quotesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return quotes;
+  } catch (error) {
+    console.log('Erro ao obter cotações:', error);
+    return [];
+  }
+};
