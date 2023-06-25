@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button, TextField, Typography, List, ListItem, ListItemText } from '@mui/material';
 import { firestore } from '../../services/firebase';
 
 const FornecedoresEContatos = () => {
@@ -90,43 +91,55 @@ const FornecedoresEContatos = () => {
 
   return (
     <div>
-      <h2>Fornecedores</h2>
+      <Typography variant="h4" component="h2" gutterBottom>
+        Fornecedores
+      </Typography>
       <form onSubmit={handleCreateFornecedor}>
-        <input
+        <TextField
           type="text"
           placeholder="Nome do fornecedor"
           value={newFornecedor}
           onChange={(e) => setNewFornecedor(e.target.value)}
+          fullWidth
+          margin="normal"
         />
-        <button type="submit">Adicionar Fornecedor</button>
+        <Button type="submit" variant="contained" color="primary">
+          Adicionar Fornecedor
+        </Button>
       </form>
-      <ul>
+      <List>
         {fornecedores.map((fornecedor) => (
-          <li key={fornecedor.id}>
-            {fornecedor.nome}
-            <button onClick={() => handleDeleteFornecedor(fornecedor.id)}>Excluir</button>
-          </li>
+          <ListItem key={fornecedor.id}>
+            <ListItemText primary={fornecedor.nome} />
+            <Button onClick={() => handleDeleteFornecedor(fornecedor.id)}>Excluir</Button>
+          </ListItem>
         ))}
-      </ul>
+      </List>
 
-      <h2>Contatos</h2>
+      <Typography variant="h4" component="h2" gutterBottom>
+        Contatos
+      </Typography>
       <form onSubmit={handleCreateContato}>
-        <input
+        <TextField
           type="text"
           placeholder="Nome do contato"
           value={newContato}
           onChange={(e) => setNewContato(e.target.value)}
+          fullWidth
+          margin="normal"
         />
-        <button type="submit">Adicionar Contato</button>
+        <Button type="submit" variant="contained" color="primary">
+          Adicionar Contato
+        </Button>
       </form>
-      <ul>
+      <List>
         {contatos.map((contato) => (
-          <li key={contato.id}>
-            {contato.nome}
-            <button onClick={() => handleDeleteContato(contato.id)}>Excluir</button>
-          </li>
+          <ListItem key={contato.id}>
+            <ListItemText primary={contato.nome} />
+            <Button onClick={() => handleDeleteContato(contato.id)}>Excluir</Button>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </div>
   );
 };

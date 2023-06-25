@@ -2,8 +2,20 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth, firestore } from '../../services/firebase';
 import SignUp from './SignUp';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth';
 import { getFirestore, collection, doc, getDoc } from 'firebase/firestore';
+import {
+  Typography,
+  TextField,
+  Button,
+  Box,
+  Link,
+  Container,
+} from '@mui/material';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -68,35 +80,46 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
+    <Container maxWidth="sm">
+      <Box sx={{ textAlign: 'center', marginTop: '40px' }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          
+        </Typography>
+        <form onSubmit={handleLogin}>
+          <TextField
             id="email"
+            label="Email"
+            type="email"
             value={email}
             onChange={handleEmailChange}
+            fullWidth
+            margin="normal"
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
+          <TextField
             id="password"
+            label="Password"
+            type="password"
             value={password}
             onChange={handlePasswordChange}
+            fullWidth
+            margin="normal"
           />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      {showSignUp ? (
-        <SignUp handleToggleSignUp={handleToggleSignUp} />
-      ) : (
-        <button onClick={handleToggleSignUp}>Cadastrar</button>
-      )}
-    </div>
+          <Button type="submit" variant="contained" fullWidth>
+            Login
+          </Button>
+        </form>
+        {showSignUp ? (
+          <SignUp handleToggleSignUp={handleToggleSignUp} />
+        ) : (
+          <Typography variant="body1" sx={{ marginTop: '16px' }}>
+            Não possui uma conta?{' '}
+            <Link href="#" onClick={handleToggleSignUp}>
+              Cadastre-se
+            </Link>
+          </Typography>
+        )}
+      </Box>
+    </Container>
   );
 };
 

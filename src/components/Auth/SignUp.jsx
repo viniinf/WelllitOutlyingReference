@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth, firestore } from '../../services/firebase';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, doc, setDoc } from 'firebase/firestore';
 
@@ -40,37 +40,50 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <h1>Cadastrar</h1>
-      <form onSubmit={handleSignUp}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
+    <Box>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Cadastrar
+      </Typography>
+      <Box component="form" onSubmit={handleSignUp}>
+        <Box sx={{ marginBottom: '1rem' }}>
+          <TextField
             type="email"
             id="email"
+            label="Email"
             value={email}
             onChange={handleEmailChange}
+            fullWidth
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
+        </Box>
+        <Box sx={{ marginBottom: '1rem' }}>
+          <TextField
             type="password"
             id="password"
+            label="Password"
             value={password}
             onChange={handlePasswordChange}
+            fullWidth
           />
-        </div>
-        <div>
-          <label htmlFor="role">Papel:</label>
-          <select id="role" value={role} onChange={handleRoleChange}>
-            <option value="gerente">Gerente</option>
-            <option value="administrador">Administrador</option>
-          </select>
-        </div>
-        <button type="submit">Cadastrar</button>
-      </form>
-    </div>
+        </Box>
+        <Box sx={{ marginBottom: '1rem' }}>
+          <FormControl fullWidth>
+            <InputLabel id="role-label">Papel</InputLabel>
+            <Select
+              labelId="role-label"
+              id="role"
+              value={role}
+              onChange={handleRoleChange}
+            >
+              <MenuItem value="gerente">Gerente</MenuItem>
+              <MenuItem value="administrador">Administrador</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+        <Button type="submit" variant="contained" color="primary">
+          Cadastrar
+        </Button>
+      </Box>
+    </Box>
   );
 };
 
