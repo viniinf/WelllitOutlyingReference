@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/Auth/Login';
 import QuoteList from './components/Quotes/QuoteList';
+import FornecedoresEContatos from './components/Contacts/FornecedoresEContatos';
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/cotacoes" element={<QuoteList />} />
+        <Route path="/fornecedores-e-contatos" element={<FornecedoresEContatos />} />
       </Routes>
     </Router>
   );
