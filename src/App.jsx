@@ -9,7 +9,7 @@ const App = () => {
       <h1>Sistema de Compras do Infnet</h1>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/quotes" element={<QuoteList />} />
+        <Route path="/cotacoes" element={<QuoteList />} />
       </Routes>
     </Router>
   );

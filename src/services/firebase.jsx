@@ -1,10 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
-
-
-
-
+import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -28,15 +24,44 @@ export const firestore = getFirestore(app);
 // Função para obter as cotações
 export const getQuotes = async () => {
   try {
-    const quotesCollectionRef = collection(firestore, 'quotes');
-    const quotesSnapshot = await getDocs(quotesCollectionRef);
+    const quotesCollection = collection(firestore, 'quotes');
+    const quotesSnapshot = await getDocs(quotesCollection);
     const quotes = quotesSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
     return quotes;
   } catch (error) {
-    console.log('Erro ao obter cotações:', error);
-    return [];
+    throw new Error('Erro ao obter as cotações: ' + error.message);
+  }
+};
+
+// Função para criar uma nova cotação
+export const createQuote = async (quote) => {
+  try {
+    const quotesCollection = collection(firestore, 'quotes');
+    await addDoc(quotesCollection, quote);
+  } catch (error) {
+    throw new Error('Erro ao criar a cotação: ' + error.message);
+  }
+};
+
+// Função para atualizar uma cotação existente
+export const updateQuote = async (quoteId, updatedQuote) => {
+  try {
+    const quoteDoc = doc(firestore, 'quotes', quoteId);
+    await updateDoc(quoteDoc, updatedQuote);
+  } catch (error) {
+    throw new Error('Erro ao atualizar a cotação: ' + error.message);
+  }
+};
+
+// Função para excluir uma cotação
+export const deleteQuote = async (quoteId) => {
+  try {
+    const quoteDoc = doc(firestore, 'quotes', quoteId);
+    await deleteDoc(quoteDoc);
+  } catch (error) {
+    throw new Error('Erro ao excluir a cotação: ' + error.message);
   }
 };
