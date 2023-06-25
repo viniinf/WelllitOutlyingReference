@@ -40,7 +40,7 @@ const Login = () => {
         if (role === 'gerente') {
           navigate('/cotacoes');
         } else if (role === 'administrador') {
-          // Redirecionar para a página de administração
+          navigate('/fornecedores-e-contatos');
         } else {
           // Redirecionar para uma página padrão
         }
