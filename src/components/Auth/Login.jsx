@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { auth } from '../../services/firebase';
+import SignUp from './SignUp'; // Importe o componente SignUp
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showSignUp, setShowSignUp] = useState(false); // Adicione o estado para mostrar ou ocultar o formulário de cadastro
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -17,7 +19,6 @@ const Login = () => {
     e.preventDefault();
 
     try {
-                 
       await auth.signInWithEmailAndPassword(email, password);
       console.log('Login bem-sucedido!');
       // Redirecione para a página desejada após o login
@@ -26,17 +27,8 @@ const Login = () => {
     }
   };
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-
-    try {
-      
-      await auth.createUserWithEmailAndPassword(email, password);
-      console.log('Cadastro realizado com sucesso!');
-      // Redirecione para a página desejada após o cadastro
-    } catch (error) {
-      console.log('Erro ao cadastrar:', error.message);
-    }
+  const handleToggleSignUp = () => {
+    setShowSignUp(!showSignUp);
   };
 
   return (
@@ -63,7 +55,11 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      <button onClick={handleSignUp}>Cadastrar</button>
+      {showSignUp ? (
+        <SignUp handleToggleSignUp={handleToggleSignUp} />
+      ) : (
+        <button onClick={handleToggleSignUp}>Cadastrar</button>
+      )}
     </div>
   );
 };
