@@ -25,6 +25,16 @@ const LogoImage = styled('img')`
   margin-top: 20px;
 `;
 
+// Componente da página "Página Não Encontrada"
+const NotFoundPage = () => {
+  return (
+    <div>
+      <h2>Página Não Encontrada</h2>
+      <p>A página que você está procurando não existe ou não está disponível</p>
+    </div>
+  );
+};
+
 const Navigation = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -71,6 +81,7 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/cotacoes" element={<QuoteList />} />
           <Route path="/fornecedores-e-contatos" element={<FornecedoresEContatos />} />
+          <Route path="*" element={<NotFoundPage />} /> {/* Rota para a página "Página Não Encontrada" */}
         </Routes>
       </StyledContainer>
     </Router>

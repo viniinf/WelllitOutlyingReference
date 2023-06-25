@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { auth, firestore } from '../../services/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { collection, doc, setDoc } from 'firebase/firestore';
 
@@ -40,50 +40,37 @@ const SignUp = () => {
   };
 
   return (
-    <Box>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Cadastrar
-      </Typography>
-      <Box component="form" onSubmit={handleSignUp}>
-        <Box sx={{ marginBottom: '1rem' }}>
-          <TextField
+    <div>
+      <h1>Cadastrar</h1>
+      <form onSubmit={handleSignUp}>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
             type="email"
             id="email"
-            label="Email"
             value={email}
             onChange={handleEmailChange}
-            fullWidth
           />
-        </Box>
-        <Box sx={{ marginBottom: '1rem' }}>
-          <TextField
+        </div>
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input
             type="password"
             id="password"
-            label="Password"
             value={password}
             onChange={handlePasswordChange}
-            fullWidth
           />
-        </Box>
-        <Box sx={{ marginBottom: '1rem' }}>
-          <FormControl fullWidth>
-            <InputLabel id="role-label">Papel</InputLabel>
-            <Select
-              labelId="role-label"
-              id="role"
-              value={role}
-              onChange={handleRoleChange}
-            >
-              <MenuItem value="gerente">Gerente</MenuItem>
-              <MenuItem value="administrador">Administrador</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Button type="submit" variant="contained" color="primary">
-          Cadastrar
-        </Button>
-      </Box>
-    </Box>
+        </div>
+        <div>
+          <label htmlFor="role">Papel:</label>
+          <select id="role" value={role} onChange={handleRoleChange}>
+            <option value="gerente">Gerente</option>
+            <option value="administrador">Administrador</option>
+          </select>
+        </div>
+        <button type="submit">Cadastrar</button>
+      </form>
+    </div>
   );
 };
 
