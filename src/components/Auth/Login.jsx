@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { auth } from '../../services/firebase';
+import { auth, firestore } from '../../services/firebase';
 import SignUp from './SignUp';
 
 const Login = () => {
@@ -21,7 +21,25 @@ const Login = () => {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       console.log('Login bem-sucedido!');
-      // Redirecione para a página desejada após o login
+
+      // Obter dados do usuário logado
+      const user = auth.currentUser;
+      if (user) {
+        const userSnapshot = await firestore.collection('users').doc(user.uid).get();
+        const userData = userSnapshot.data();
+        const role = userData.role;
+
+        console.log('Role do usuário:', role);
+
+        // Redirecionar com base na role do usuário
+        if (role === 'gerente') {
+          // Redirecionar para a página de cotações
+        } else if (role === 'administrador') {
+          // Redirecionar para a página de administração
+        } else {
+          // Redirecionar para uma página padrão
+        }
+      }
     } catch (error) {
       console.log('Erro ao fazer login:', error.message);
     }
