@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container } from '@mui/material';
 import { styled } from '@mui/system';
@@ -16,17 +16,16 @@ const StyledContainer = styled(Container)`
 const App = () => {
   const [userType, setUserType] = useState('');
 
-  useEffect(() => {
-   
-    setUserType('admin'); //teste com usuario admin
-  }, []);
+  const handleLoginSuccess = (userRole) => {
+    setUserType(userRole);
+  };
 
   return (
     <Router>
       <StyledContainer maxWidth="sm">
         <Navigation userType={userType} />
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Login onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/cotacoes" element={<QuoteList />} />
           <Route path="/fornecedores-e-contatos" element={<FornecedoresEContatos />} />
           <Route path="*" element={<NotFoundPage />} />
