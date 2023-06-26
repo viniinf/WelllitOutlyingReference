@@ -6,6 +6,7 @@ import Login from './components/Auth/Login';
 import QuoteList from './components/Quotes/QuoteList';
 import FornecedoresEContatos from './components/Contacts/FornecedoresEContatos';
 import Navigation from './components/Layout/Navigation';
+import NotFoundPage from './components/Layout/NotFoundPage';
 
 const StyledContainer = styled(Container)`
   text-align: center;
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/cotacoes" element={<QuoteList />} />
           <Route path="/fornecedores-e-contatos" element={<FornecedoresEContatos />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </StyledContainer>
     </Router>
