@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppBar, Toolbar, Typography, IconButton, Container, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
 import { styled } from '@mui/system';
 import { Menu as MenuIcon } from '@mui/icons-material';
 
@@ -8,35 +8,6 @@ const StyledHeader = styled(Typography)`
   font-size: 2rem;
   margin-bottom: 2rem;
 `;
-
-const StyledContainer = styled(Container)`
-  text-align: center;
-  padding-top: 40px;
-`;
-
-const NotFoundPage = () => {
-  const imageUrl = 'https://picsum.photos/1200/800';
-
-  const styles = {
-    backgroundImage: `url(${imageUrl})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    width: '100%',
-    height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: 'white',
-    fontSize: '2rem',
-  };
-
-  return (
-    <div style={styles}>
-      <h2>Página Não Encontrada</h2>
-      <p>A página que você está procurando não existe ou não está disponível</p>
-    </div>
-  );
-};
 
 const Navigation = ({ userType }) => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -53,7 +24,7 @@ const Navigation = ({ userType }) => {
 
   const menuItems = [
     { path: '/', label: 'Home', allowedUserTypes: ['usuario', 'gerente', 'admin'] },
-    { path: '/cotacoes', label: 'Cotações', allowedUserTypes: ['gerente'] },
+    { path: '/cotacoes', label: 'Cotações', allowedUserTypes: ['gerente', 'admin'] },
     { path: '/fornecedores-e-contatos', label: 'Fornecedores e Contatos', allowedUserTypes: ['admin'] },
   ];
 
