@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Container } from '@mui/material';
 import { styled } from '@mui/system';
@@ -7,16 +7,24 @@ import QuoteList from './components/Quotes/QuoteList';
 import FornecedoresEContatos from './components/Contacts/FornecedoresEContatos';
 import NotFoundPage from './components/Layout/NotFoundPage';
 import Navigation from './components/Layout/Navigation';
+
 const StyledContainer = styled(Container)`
   text-align: center;
   padding-top: 40px;
 `;
 
 const App = () => {
+  const [userType, setUserType] = useState('');
+
+  useEffect(() => {
+   
+    setUserType('admin'); //teste com usuario admin
+  }, []);
+
   return (
     <Router>
       <StyledContainer maxWidth="sm">
-         <Navigation />
+        <Navigation userType={userType} />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/cotacoes" element={<QuoteList />} />

@@ -24,7 +24,7 @@ const Navigation = ({ userType }) => {
 
   const menuItems = [
     { path: '/', label: 'Home', allowedUserTypes: ['usuario', 'gerente', 'admin'] },
-    { path: '/cotacoes', label: 'Cotações', allowedUserTypes: ['gerente', 'admin'] },
+    { path: '/cotacoes', label: 'Cotações', allowedUserTypes: ['gerente'] },
     { path: '/fornecedores-e-contatos', label: 'Fornecedores e Contatos', allowedUserTypes: ['admin'] },
   ];
 
