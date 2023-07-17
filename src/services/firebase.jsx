@@ -4,7 +4,7 @@ import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } 
 
 
 
-// Configuração do Firebase
+// Configuração do Firebase DR2AT202306
 const firebaseConfig = {
   apiKey: "AIzaSyCkI2cFXcXZRdGn9L6cAKeNjygjpIXf7ZE",
   authDomain: "dr2at202306.firebaseapp.com",
