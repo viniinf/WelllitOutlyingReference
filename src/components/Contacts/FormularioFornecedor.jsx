@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../../services/firebase';
 
 const FormularioFornecedor = ({ adicionarFornecedor }) => {
   const [empresa, setEmpresa] = useState('');
@@ -13,7 +15,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
   const [estado, setEstado] = useState('');
   const [pais, setPais] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const fornecedor = {
@@ -30,19 +32,24 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
       pais,
     };
 
-    adicionarFornecedor(fornecedor);
+    try {
+      const docRef = await addDoc(collection(db, 'fornecedores'), fornecedor);
+      adicionarFornecedor({ id: docRef.id, ...fornecedor });
 
-    setEmpresa('');
-    setRazaoSocial('');
-    setCnpj('');
-    setContato('');
-    setRamoAtuacao('');
-    setTelefone('');
-    setEmail('');
-    setCep('');
-    setCidade('');
-    setEstado('');
-    setPais('');
+      setEmpresa('');
+      setRazaoSocial('');
+      setCnpj('');
+      setContato('');
+      setRamoAtuacao('');
+      setTelefone('');
+      setEmail('');
+      setCep('');
+      setCidade('');
+      setEstado('');
+      setPais('');
+    } catch (error) {
+      console.log('Erro ao adicionar fornecedor:', error);
+    }
   };
 
   return (

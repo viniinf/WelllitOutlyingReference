@@ -2,8 +2,6 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore, collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 
-
-
 // Configuração do Firebase DR2AT202306
 const firebaseConfig = {
   apiKey: "AIzaSyCkI2cFXcXZRdGn9L6cAKeNjygjpIXf7ZE",
@@ -21,12 +19,14 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
 // Referência para o serviço Firestore do Firebase
-export const firestore = getFirestore(app);
+export const db = getFirestore(app);
+//export const db = firebase.firestore();
+
 
 // Função para obter as cotações
 export const getQuotes = async () => {
   try {
-    const quotesCollection = collection(firestore, 'quotes');
+    const quotesCollection = collection(db, 'quotes');
     const quotesSnapshot = await getDocs(quotesCollection);
     const quotes = quotesSnapshot.docs.map((doc) => ({
       id: doc.id,
@@ -41,7 +41,7 @@ export const getQuotes = async () => {
 // Função para criar uma nova cotação
 export const createQuote = async (quote) => {
   try {
-    const quotesCollection = collection(firestore, 'quotes');
+    const quotesCollection = collection(db, 'quotes');
     await addDoc(quotesCollection, quote);
   } catch (error) {
     throw new Error('Erro ao criar a cotação: ' + error.message);
@@ -51,7 +51,7 @@ export const createQuote = async (quote) => {
 // Função para atualizar uma cotação existente
 export const updateQuote = async (quoteId, updatedQuote) => {
   try {
-    const quoteDoc = doc(firestore, 'quotes', quoteId);
+    const quoteDoc = doc(db, 'quotes', quoteId);
     await updateDoc(quoteDoc, updatedQuote);
   } catch (error) {
     throw new Error('Erro ao atualizar a cotação: ' + error.message);
@@ -61,7 +61,7 @@ export const updateQuote = async (quoteId, updatedQuote) => {
 // Função para excluir uma cotação
 export const deleteQuote = async (quoteId) => {
   try {
-    const quoteDoc = doc(firestore, 'quotes', quoteId);
+    const quoteDoc = doc(db, 'quotes', quoteId);
     await deleteDoc(quoteDoc);
   } catch (error) {
     throw new Error('Erro ao excluir a cotação: ' + error.message);

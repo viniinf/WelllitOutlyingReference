@@ -7,7 +7,6 @@ import QuoteList from './components/Quotes/QuoteList';
 import NotFoundPage from './components/Layout/NotFoundPage';
 import Navigation from './components/Layout/Navigation';
 import FormularioFornecedor from './components/Contacts/FormularioFornecedor';
-//import FormularioContato from './components/Contacts/FormularioContato';
 import Lista from './components/Contacts/Lista';
 
 const StyledContainer = styled(Container)`
@@ -54,9 +53,9 @@ const App = () => {
             element={
               <div>
                 <FormularioFornecedor adicionarFornecedor={adicionarFornecedor} />
-                {/* <FormularioContato adicionarContato={adicionarContato} /> */}
                 <Lista itens={fornecedores} removerItem={removerFornecedor} />
-                <Lista itens={contatos} removerItem={removerContato} />
+                {/* <FormularioContato adicionarContato={adicionarContato} /> */}
+                {/* <Lista itens={contatos} removerItem={removerContato} /> */}
               </div>
             }
           />

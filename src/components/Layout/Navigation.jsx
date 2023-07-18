@@ -39,7 +39,7 @@ const Navigation = ({ userType }) => {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Sistema de Compras do INFNET
+          SCI
         </Typography>
       </Toolbar>
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
