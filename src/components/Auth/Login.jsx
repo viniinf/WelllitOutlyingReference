@@ -100,7 +100,7 @@ const Login = () => {
     <Container maxWidth="sm">
       <Box sx={{ textAlign: 'center', marginTop: '40px' }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Login
+          Cadastro
         </Typography>
         <form onSubmit={handleLogin}>
           <TextField
@@ -142,12 +142,17 @@ const Login = () => {
           </Button>
         </form>
         {!showSignUp ? (
-          <Typography variant="body1" sx={{ marginTop: '16px' }}>
-            Não possui uma conta?{' '}
-            <Link href="#" onClick={handleToggleSignUp}>
-              Cadastre-se
-            </Link>
-          </Typography>
+          <>
+            <Typography variant="body1" sx={{ marginTop: '16px' }}>
+              Não possui uma conta?{' '}
+              <Link href="#" onClick={handleToggleSignUp}>
+                Cadastre-se
+              </Link>
+            </Typography>
+            <Typography variant="body1" sx={{ marginTop: '5px' }}>
+              Todos os direitos reservados Vinícius de Souza Carvalho ® 2023
+            </Typography>
+          </>
         ) : (
           <Button onClick={handleSignUp} variant="contained" fullWidth>
             Cadastrar

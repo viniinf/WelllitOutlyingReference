@@ -15,6 +15,7 @@ const generateFakeData = () => {
   const ceps = ['12345-678', '67890-123', '45678-901', '90123-456'];
   const cidades = ['Cidade A', 'Cidade B', 'Cidade C', 'Cidade D'];
   const estados = ['Estado A', 'Estado B', 'Estado C', 'Estado D'];
+  const paises = ['País A', 'País B', 'País C', 'País D'];
 
   const randomIndex = Math.floor(Math.random() * 4);
 
@@ -29,6 +30,7 @@ const generateFakeData = () => {
     cep: ceps[randomIndex],
     cidade: cidades[randomIndex],
     estado: estados[randomIndex],
+    pais: paises[randomIndex],
   };
 };
 
@@ -44,6 +46,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
   const [cep, setCep] = useState('');
   const [cidade, setCidade] = useState('');
   const [estado, setEstado] = useState('');
+  const [pais, setPais] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -59,6 +62,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
       cep,
       cidade,
       estado,
+      pais,
     };
 
     try {
@@ -75,6 +79,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
       setCep('');
       setCidade('');
       setEstado('');
+      setPais('');
     } catch (error) {
       console.log('Erro ao adicionar fornecedor:', error);
     }
@@ -119,6 +124,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
         setCep(data.cep);
         setCidade(data.cidade);
         setEstado(data.estado);
+        setPais(data.pais);
       });
     } catch (error) {
       console.log('Erro ao obter dados do fornecedor:', error);
@@ -140,6 +146,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
       cep,
       cidade,
       estado,
+      pais,
     };
 
     try {
@@ -161,6 +168,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
       setCep('');
       setCidade('');
       setEstado('');
+      setPais('');
     } catch (error) {
       console.log('Erro ao atualizar fornecedor:', error);
     }
@@ -178,6 +186,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
     setCep(fakeData.cep);
     setCidade(fakeData.cidade);
     setEstado(fakeData.estado);
+    setPais(fakeData.pais);
   };
 
   useEffect(() => {
@@ -258,6 +267,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
             onChange={(event) => setEstado(event.target.value)}
             required
           />
+         
           <button type="submit">
             <Add />
             Adicionar Fornecedor
@@ -295,13 +305,9 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
             <strong>CEP:</strong> {fornecedor.cep}<br/>
             <strong>Cidade:</strong> {fornecedor.cidade}<br/>
             <strong>Estado:</strong> {fornecedor.estado}<br/>
+            <strong>País:</strong> {fornecedor.pais}<br/>
             <button type="button" onClick={() => handleExcluirFornecedor(fornecedor.id)}>
               <Delete />
-              Excluir
-            </button>
-            <button type="button" onClick={() => handleEditarFornecedor(fornecedor.id)}>
-              <Edit />
-              Editar
             </button>
           </div>
         ))}
