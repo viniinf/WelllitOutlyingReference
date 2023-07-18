@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../services/firebase';
-import { Delete, Edit, Add, ListAlt, Build } from '@mui/icons-material';
+import { Delete, Add, ListAlt, Build } from '@mui/icons-material';
 
-// Função para gerar dados fake aleatórios
+// Dados Fake aleatórios
 const generateFakeData = () => {
-  const empresas = ['Empresa A', 'Empresa B', 'Empresa C', 'Empresa D'];
-  const razoesSociais = ['Razão Social A', 'Razão Social B', 'Razão Social C', 'Razão Social D'];
-  const cnpjs = ['123456789', '987654321', '456789123', '321987654'];
-  const contatos = ['Contato A', 'Contato B', 'Contato C', 'Contato D'];
-  const ramosAtuacao = ['Ramo A', 'Ramo B', 'Ramo C', 'Ramo D'];
-  const telefones = ['111111111', '222222222', '333333333', '444444444'];
-  const emails = ['emaila@example.com', 'emailb@example.com', 'emailc@example.com', 'emaild@example.com'];
-  const ceps = ['12345-678', '67890-123', '45678-901', '90123-456'];
-  const cidades = ['Cidade A', 'Cidade B', 'Cidade C', 'Cidade D'];
-  const estados = ['Estado A', 'Estado B', 'Estado C', 'Estado D'];
-  const paises = ['País A', 'País B', 'País C', 'País D'];
+  const empresas = ['Universidade de São Paulo', 'Universidade Federal do Rio de Janeiro', 'Universidade Federal de Minas Gerais', 'Universidade Federal do Rio Grande do Sul', 'Universidade Estadual de Campinas', 'Universidade Federal de Pernambuco', 'Universidade Federal do Paraná', 'Universidade Federal do Ceará', 'Universidade Federal do Amazonas', 'INFNET Rio de Janeiro'];
+  const razoesSociais = ['USP', 'UFRJ', 'UFMG', 'UFRGS', 'UNICAMP', 'UFPE', 'UFPR', 'UFC', 'UFAM', 'INFNET'];
+  const cnpjs = ['00.000.000/0001-01', '00.000.000/0001-02', '00.000.000/0001-03', '00.000.000/0001-04', '00.000.000/0001-05', '00.000.000/0001-06', '00.000.000/0001-07', '00.000.000/0001-08', '00.000.000/0001-09', '00.000.000/0001-10'];
+  const contatos = ['João da Silva', 'Maria Santos', 'José Oliveira', 'Ana Pereira', 'Pedro Souza', 'Mariana Costa', 'Lucas Oliveira', 'Camila Almeida', 'Gustavo Silva', 'Carla Rodrigues'];
+  const ramosAtuacao = ['Educação', 'Educação', 'Educação', 'Educação', 'Educação', 'Educação', 'Educação', 'Educação', 'Educação', 'Educação'];
+  const telefones = ['(11) 1111-1111', '(21) 2222-2222', '(31) 3333-3333', '(51) 4444-4444', '(19) 5555-5555', '(81) 6666-6666', '(41) 7777-7777', '(85) 8888-8888', '(92) 9999-9999', '(21) 1234-5678'];
+  const emails = ['joao.silva@usp.br', 'maria.santos@ufrj.br', 'jose.oliveira@ufmg.br', 'ana.pereira@ufrgs.br', 'pedro.souza@unicamp.br', 'mariana.costa@ufpe.br', 'lucas.oliveira@ufpr.br', 'camila.almeida@ufc.br', 'gustavo.silva@ufam.br', 'carla.rodrigues@infnet.edu.br'];
+  const ceps = ['01234-567', '12345-678', '23456-789', '34567-890', '45678-901', '56789-012', '67890-123', '78901-234', '89012-345', '90123-456'];
+  const cidades = ['São Paulo', 'Rio de Janeiro', 'Belo Horizonte', 'Porto Alegre', 'Campinas', 'Recife', 'Curitiba', 'Fortaleza', 'Manaus', 'Rio de Janeiro'];
+  const estados = ['SP', 'RJ', 'MG', 'RS', 'SP', 'PE', 'PR', 'CE', 'AM', 'RJ'];
+
+
+
+
 
   const randomIndex = Math.floor(Math.random() * 4);
 
@@ -30,7 +33,7 @@ const generateFakeData = () => {
     cep: ceps[randomIndex],
     cidade: cidades[randomIndex],
     estado: estados[randomIndex],
-    pais: paises[randomIndex],
+    
   };
 };
 
@@ -46,7 +49,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
   const [cep, setCep] = useState('');
   const [cidade, setCidade] = useState('');
   const [estado, setEstado] = useState('');
-  const [pais, setPais] = useState('');
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -62,7 +65,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
       cep,
       cidade,
       estado,
-      pais,
+     
     };
 
     try {
@@ -79,7 +82,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
       setCep('');
       setCidade('');
       setEstado('');
-      setPais('');
+    
     } catch (error) {
       console.log('Erro ao adicionar fornecedor:', error);
     }
@@ -124,7 +127,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
         setCep(data.cep);
         setCidade(data.cidade);
         setEstado(data.estado);
-        setPais(data.pais);
+        
       });
     } catch (error) {
       console.log('Erro ao obter dados do fornecedor:', error);
@@ -146,7 +149,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
       cep,
       cidade,
       estado,
-      pais,
+     
     };
 
     try {
@@ -168,7 +171,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
       setCep('');
       setCidade('');
       setEstado('');
-      setPais('');
+     
     } catch (error) {
       console.log('Erro ao atualizar fornecedor:', error);
     }
@@ -186,7 +189,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
     setCep(fakeData.cep);
     setCidade(fakeData.cidade);
     setEstado(fakeData.estado);
-    setPais(fakeData.pais);
+    
   };
 
   useEffect(() => {
@@ -305,7 +308,7 @@ const FormularioFornecedor = ({ adicionarFornecedor }) => {
             <strong>CEP:</strong> {fornecedor.cep}<br/>
             <strong>Cidade:</strong> {fornecedor.cidade}<br/>
             <strong>Estado:</strong> {fornecedor.estado}<br/>
-            <strong>País:</strong> {fornecedor.pais}<br/>
+           
             <button type="button" onClick={() => handleExcluirFornecedor(fornecedor.id)}>
               <Delete />
             </button>

@@ -54,8 +54,8 @@ const App = () => {
               <div>
                 <FormularioFornecedor adicionarFornecedor={adicionarFornecedor} />
                 <Lista itens={fornecedores} removerItem={removerFornecedor} />
-                {/* <FormularioContato adicionarContato={adicionarContato} /> */}
-                {/* <Lista itens={contatos} removerItem={removerContato} /> */}
+                {}
+                {}
               </div>
             }
           />
