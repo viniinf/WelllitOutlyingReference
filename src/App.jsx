@@ -7,6 +7,9 @@ import QuoteList from './components/Quotes/QuoteList';
 import FornecedoresEContatos from './components/Contacts/FornecedoresEContatos';
 import NotFoundPage from './components/Layout/NotFoundPage';
 import Navigation from './components/Layout/Navigation';
+import FormularioFornecedor from './components/Contacts/FormularioFornecedor';
+import FormularioContato from './components/Contacts/FormularioContato';
+import Lista from './components/Contacts/Lista';
 
 const StyledContainer = styled(Container)`
   text-align: center;
@@ -15,9 +18,29 @@ const StyledContainer = styled(Container)`
 
 const App = () => {
   const [userType, setUserType] = useState('');
+  const [fornecedores, setFornecedores] = useState([]);
+  const [contatos, setContatos] = useState([]);
 
   const handleLoginSuccess = (userRole) => {
     setUserType(userRole);
+  };
+
+  const adicionarFornecedor = (fornecedor) => {
+    setFornecedores([...fornecedores, fornecedor]);
+  };
+
+  const adicionarContato = (contato) => {
+    setContatos([...contatos, contato]);
+  };
+
+  const removerFornecedor = (id) => {
+    const novosFornecedores = fornecedores.filter((fornecedor) => fornecedor.id !== id);
+    setFornecedores(novosFornecedores);
+  };
+
+  const removerContato = (id) => {
+    const novosContatos = contatos.filter((contato) => contato.id !== id);
+    setContatos(novosContatos);
   };
 
   return (
@@ -27,7 +50,17 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login onLoginSuccess={handleLoginSuccess} />} />
           <Route path="/cotacoes" element={<QuoteList />} />
-          <Route path="/fornecedores-e-contatos" element={<FornecedoresEContatos />} />
+          <Route
+            path="/fornecedores-e-contatos"
+            element={
+              <div>
+                <FormularioFornecedor adicionarFornecedor={adicionarFornecedor} />
+                <FormularioContato adicionarContato={adicionarContato} />
+                <Lista itens={fornecedores} removerItem={removerFornecedor} />
+                <Lista itens={contatos} removerItem={removerContato} />
+              </div>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </StyledContainer>
