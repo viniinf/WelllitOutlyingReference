@@ -16,6 +16,10 @@ import {
   Box,
   Link,
   Container,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 
 const Login = () => {
@@ -119,18 +123,18 @@ const Login = () => {
           />
           {showSignUp && (
             <div>
-              <TextField
-                id="role"
-                label="Papel"
-                select
-                value={role}
-                onChange={handleRoleChange}
-                fullWidth
-                margin="normal"
-              >
-                <option value="gerente">Gerente</option>
-                <option value="administrador">Administrador</option>
-              </TextField>
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="role-label">Papel</InputLabel>
+                <Select
+                  labelId="role-label"
+                  id="role"
+                  value={role}
+                  onChange={handleRoleChange}
+                >
+                  <MenuItem value="gerente">Gerente</MenuItem>
+                  <MenuItem value="administrador">Administrador</MenuItem>
+                </Select>
+              </FormControl>
             </div>
           )}
           <Button type="submit" variant="contained" fullWidth>
