@@ -4,11 +4,10 @@ import { Container } from '@mui/material';
 import { styled } from '@mui/system';
 import Login from './components/Auth/Login';
 import QuoteList from './components/Quotes/QuoteList';
-import FornecedoresEContatos from './components/Contacts/FornecedoresEContatos';
 import NotFoundPage from './components/Layout/NotFoundPage';
 import Navigation from './components/Layout/Navigation';
 import FormularioFornecedor from './components/Contacts/FormularioFornecedor';
-import FormularioContato from './components/Contacts/FormularioContato';
+//import FormularioContato from './components/Contacts/FormularioContato';
 import Lista from './components/Contacts/Lista';
 
 const StyledContainer = styled(Container)`
@@ -55,7 +54,7 @@ const App = () => {
             element={
               <div>
                 <FormularioFornecedor adicionarFornecedor={adicionarFornecedor} />
-                <FormularioContato adicionarContato={adicionarContato} />
+                {/* <FormularioContato adicionarContato={adicionarContato} /> */}
                 <Lista itens={fornecedores} removerItem={removerFornecedor} />
                 <Lista itens={contatos} removerItem={removerContato} />
               </div>
