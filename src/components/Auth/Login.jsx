@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 import {
   Typography,
   TextField,
@@ -23,18 +23,10 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showSignUp, setShowSignUp] = useState(false);
-  const [company, setCompany] = useState('');
-  const [razaoSocial, setRazaoSocial] = useState('');
-  const [cnpj, setCnpj] = useState('');
-  const [contact, setContact] = useState('');
-  const [activity, setActivity] = useState('');
-  const [phone, setPhone] = useState('');
-  const [cep, setCep] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [country, setCountry] = useState('');
+  const [role, setRole] = useState('administrador');
 
   const auth = getAuth();
+  const firestore = getFirestore();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -44,44 +36,8 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleCompanyChange = (e) => {
-    setCompany(e.target.value);
-  };
-
-  const handleRazaoSocialChange = (e) => {
-    setRazaoSocial(e.target.value);
-  };
-
-  const handleCnpjChange = (e) => {
-    setCnpj(e.target.value);
-  };
-
-  const handleContactChange = (e) => {
-    setContact(e.target.value);
-  };
-
-  const handleActivityChange = (e) => {
-    setActivity(e.target.value);
-  };
-
-  const handlePhoneChange = (e) => {
-    setPhone(e.target.value);
-  };
-
-  const handleCepChange = (e) => {
-    setCep(e.target.value);
-  };
-
-  const handleCityChange = (e) => {
-    setCity(e.target.value);
-  };
-
-  const handleStateChange = (e) => {
-    setState(e.target.value);
-  };
-
-  const handleCountryChange = (e) => {
-    setCountry(e.target.value);
+  const handleRoleChange = (e) => {
+    setRole(e.target.value);
   };
 
   const handleLogin = async (e) => {
@@ -93,16 +49,15 @@ const Login = () => {
 
       const user = auth.currentUser;
       if (user) {
-        const firestore = getFirestore();
         const userSnapshot = await getDoc(doc(firestore, 'users', user.uid));
         const userData = userSnapshot.data();
-        const role = userData.role;
+        const userRole = userData.role;
 
-        console.log('Role do usuário:', role);
+        console.log('Papel do usuário:', userRole);
 
-        if (role === 'gerente') {
+        if (userRole === 'gerente') {
           navigate('/cotacoes');
-        } else if (role === 'administrador') {
+        } else if (userRole === 'administrador') {
           navigate('/fornecedores-e-contatos');
         } else {
           // Redirecionar para uma página padrão
@@ -124,22 +79,11 @@ const Login = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log('Usuário cadastrado com sucesso:', userCredential.user);
 
-      // Armazenar informações do fornecedor no Firestore
+      // Armazenar a informação do papel do usuário no banco de dados
       const user = auth.currentUser;
       if (user) {
         const userRef = doc(db, 'users', user.uid);
-        await setDoc(userRef, {
-          company,
-          razaoSocial,
-          cnpj,
-          contact,
-          activity,
-          phone,
-          cep,
-          city,
-          state,
-          country,
-        });
+        await setDoc(userRef, { role });
       }
 
       // Redirecionar ou executar outras ações após o cadastro bem-sucedido
@@ -176,95 +120,17 @@ const Login = () => {
           {showSignUp && (
             <div>
               <TextField
-                id="company"
-                label="Empresa"
-                type="text"
-                value={company}
-                onChange={handleCompanyChange}
+                id="role"
+                label="Papel"
+                select
+                value={role}
+                onChange={handleRoleChange}
                 fullWidth
                 margin="normal"
-              />
-              <TextField
-                id="razaoSocial"
-                label="Razão Social"
-                type="text"
-                value={razaoSocial}
-                onChange={handleRazaoSocialChange}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                id="cnpj"
-                label="CNPJ"
-                type="text"
-                value={cnpj}
-                onChange={handleCnpjChange}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                id="contact"
-                label="Contato"
-                type="text"
-                value={contact}
-                onChange={handleContactChange}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                id="activity"
-                label="Ramo de Atuação"
-                type="text"
-                value={activity}
-                onChange={handleActivityChange}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                id="phone"
-                label="Telefone"
-                type="text"
-                value={phone}
-                onChange={handlePhoneChange}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                id="cep"
-                label="CEP"
-                type="text"
-                value={cep}
-                onChange={handleCepChange}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                id="city"
-                label="Cidade"
-                type="text"
-                value={city}
-                onChange={handleCityChange}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                id="state"
-                label="Estado"
-                type="text"
-                value={state}
-                onChange={handleStateChange}
-                fullWidth
-                margin="normal"
-              />
-              <TextField
-                id="country"
-                label="País"
-                type="text"
-                value={country}
-                onChange={handleCountryChange}
-                fullWidth
-                margin="normal"
-              />
+              >
+                <option value="gerente">Gerente</option>
+                <option value="administrador">Administrador</option>
+              </TextField>
             </div>
           )}
           <Button type="submit" variant="contained" fullWidth>
