@@ -20,7 +20,7 @@ const generateFakeData = () => {
 
 
 
-  const randomIndex = Math.floor(Math.random() * 4);
+  const randomIndex = Math.floor(Math.random() * 10);
 
   return {
     empresa: empresas[randomIndex],
