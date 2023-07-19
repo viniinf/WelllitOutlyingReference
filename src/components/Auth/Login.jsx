@@ -77,24 +77,37 @@ const Login = () => {
   };
 
   const handleSignUp = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('Usuário cadastrado com sucesso:', userCredential.user);
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    console.log('Usuário cadastrado com sucesso:', userCredential.user);
 
-      // Armazenar a informação do papel do usuário no banco de dados
-      const user = auth.currentUser;
-      if (user) {
-        const userRef = doc(db, 'users', user.uid);
-        await setDoc(userRef, { role });
-      }
+    // Realizar login automático após o cadastro
+    await signInWithEmailAndPassword(auth, email, password);
+    console.log('Login automático bem-sucedido!');
 
-      // Redirecionar ou executar outras ações após o cadastro bem-sucedido
-    } catch (error) {
-      console.log('Erro ao cadastrar:', error.message);
+    // Armazenar a informação do papel do usuário no banco de dados
+    const user = auth.currentUser;
+    if (user) {
+      const userRef = doc(db, 'users', user.uid);
+      await setDoc(userRef, { role });
     }
-  };
+
+    // Redirecionar ou executar outras ações após o cadastro e login automático bem-sucedidos
+    const userRole = role;
+
+    if (userRole === 'gerente') {
+      navigate('/cotacoes');
+    } else if (userRole === 'administrador') {
+      navigate('/fornecedores-e-contatos');
+    } else {
+      // Redirecionar para uma página padrão
+    }
+  } catch (error) {
+    console.log('Erro ao cadastrar:', error.message);
+  }
+};
 
   return (
     <Container maxWidth="sm">
@@ -135,11 +148,16 @@ const Login = () => {
                   <MenuItem value="administrador">Administrador</MenuItem>
                 </Select>
               </FormControl>
+              <Button onClick={handleSignUp} variant="contained" fullWidth>
+                Cadastrar
+              </Button>
             </div>
           )}
-          <Button type="submit" variant="contained" fullWidth>
-            Login
-          </Button>
+          {!showSignUp && (
+            <Button type="submit" variant="contained" fullWidth>
+              Login
+            </Button>
+          )}
         </form>
         {!showSignUp ? (
           <>
@@ -153,11 +171,7 @@ const Login = () => {
               Todos os direitos reservados Vinícius de Souza Carvalho ® 2023
             </Typography>
           </>
-        ) : (
-          <Button onClick={handleSignUp} variant="contained" fullWidth>
-            Cadastrar
-          </Button>
-        )}
+        ) : null}
       </Box>
     </Container>
   );
