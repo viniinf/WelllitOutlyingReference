@@ -112,8 +112,9 @@ const Login = () => {
   return (
     <Container maxWidth="sm">
       <Box sx={{ textAlign: 'center', marginTop: '40px' }}>
+        <img src="/logo.png" alt="Logo" style={{ width: '200px' }} />
         <Typography variant="h4" component="h1" gutterBottom>
-          Cadastro
+          Seja bem vindo!
         </Typography>
         <form onSubmit={handleLogin}>
           <TextField
